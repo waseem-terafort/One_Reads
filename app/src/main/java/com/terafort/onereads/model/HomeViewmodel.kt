@@ -27,7 +27,7 @@ class HomeViewmodel(application: Application) : AndroidViewModel(application) {
 
         )
         _myDataList.value = dataList
-        Log.e("homedata3", "data is showing")
+
     }
 }
 

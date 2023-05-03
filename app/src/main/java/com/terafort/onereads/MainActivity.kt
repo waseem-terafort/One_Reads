@@ -27,12 +27,10 @@ class MainActivity : AppCompatActivity() {
                 R.id.recentFragment2->replacefragment(RecentFragment())
                 R.id.settingsFragment->replacefragment(SettingsFragment())
                 else ->{
-
                 }
             }
             true
         }
-
     }
     private fun replacefragment(fragment: Fragment){
         val fragmentManager=supportFragmentManager
