@@ -9,4 +9,7 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="normal">#F3E8E8</color>
+
+    <color name="nick">#0057FF</color>
+    <color name="AlldocumentBackground">#0D251D36</color>
 </resources>

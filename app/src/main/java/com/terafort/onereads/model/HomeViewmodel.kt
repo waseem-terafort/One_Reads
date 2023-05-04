@@ -21,9 +21,12 @@ class HomeViewmodel(application: Application) : AndroidViewModel(application) {
 
     init {
         val dataList = listOf(
-            HomeData(R.drawable.pdf_file_icon_svg, "Item 1", "Subtitle 1"),
-            HomeData(R.drawable.pdf_file_icon_svg, "Item 2", "Subtitle 2"),
-            HomeData(R.drawable.pdf_file_icon_svg, "Item 3", "Subtitle 3")
+            HomeData(R.drawable.all_files, "All Files", "Subtitle 1"),
+            HomeData(R.drawable.pdf, "PDF", "Subtitle 2"),
+            HomeData(R.drawable.excel, "Exel", "Subtitle 3"),
+            HomeData(R.drawable.doc, "Doc", "Subtitle 1"),
+            HomeData(R.drawable.ppt, "PPT", "Subtitle 2"),
+            HomeData(R.drawable.text, "TXT", "Subtitle 3")
 
         )
         _myDataList.value = dataList

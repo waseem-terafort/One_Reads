@@ -3,16 +3,11 @@
 <item
     android:id="@+id/homeFragment"
     android:title="Home"
-    android:icon="@drawable/ic_home_black_24dp"
+    android:icon="@drawable/home_icon"
     />
-    <item
-        android:id="@+id/recentFragment2"
-        android:title="Recent"
-        android:icon="@drawable/lock_reset_24"
-        />
     <item
         android:id="@+id/settingsFragment"
         android:title="Settings"
-        android:icon="@drawable/baseline_settings_24"
+        android:icon="@drawable/setting_icon"
         />
 </menu>

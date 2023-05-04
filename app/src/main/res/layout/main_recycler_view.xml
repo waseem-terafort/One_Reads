@@ -8,21 +8,25 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout2"
             android:layout_width="match_parent"
             android:layout_height="100dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            android:background="@drawable/all_document_background"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/testimage"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="@{homeData.Homeimageview}"
+                android:background="@{homeData.homeimageview}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHeight_percent="0.8"
                 app:layout_constraintStart_toStartOf="parent"
@@ -49,25 +53,6 @@
                 app:layout_constraintStart_toEndOf="@+id/testimage"
                 app:layout_constraintTop_toBottomOf="@+id/Header" />
 
-            <ImageView
-                android:id="@+id/homearrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="12dp"
-                android:src="@drawable/arrow_forward_ios_24"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:background="@color/black"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent="0.01"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/testimage" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

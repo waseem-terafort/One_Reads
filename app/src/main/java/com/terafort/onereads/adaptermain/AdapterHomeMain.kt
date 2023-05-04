@@ -1,6 +1,6 @@
 package com.terafort.onereads.adaptermain
 
-import android.util.Log
+
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -56,7 +56,7 @@ class AdapterHomeMain(private var homeDataList: List<HomeData>) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(homeData: HomeData) {
-            binding.testimage.setImageResource(homeData.Homeimageview)
+            binding.testimage.setImageResource(homeData.homeimageview)
             binding.Header.text = homeData.textViewHeader
             binding.nicknameofheader.text = homeData.textViewnickname
 
@@ -67,7 +67,7 @@ class AdapterHomeMain(private var homeDataList: List<HomeData>) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(homeData: HomeData) {
-            binding.testimage2.setImageResource(homeData.Homeimageview)
+            binding.testimage2.setImageResource(homeData.homeimageview)
             binding.header2.text = homeData.textViewHeader
             binding.headernick.text = homeData.textViewnickname
 
