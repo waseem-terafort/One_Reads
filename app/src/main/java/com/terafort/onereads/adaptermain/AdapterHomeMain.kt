@@ -4,8 +4,9 @@ package com.terafort.onereads.adaptermain
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.terafort.onereads.data.FavoriteData
 import com.terafort.onereads.data.HomeData
-import com.terafort.onereads.databinding.ItemMainHomeGridBinding
+
 import com.terafort.onereads.databinding.MainRecyclerViewBinding
 
 class AdapterHomeMain(private var homeDataList: List<HomeData>) :
@@ -25,7 +26,7 @@ class AdapterHomeMain(private var homeDataList: List<HomeData>) :
             LinearViewHolder(binding)
         } else {
             val inflater = LayoutInflater.from(parent.context)
-            val binding = ItemMainHomeGridBinding.inflate(inflater, parent, false)
+            val binding = MainRecyclerViewBinding.inflate(inflater, parent, false)
             GridViewHolder(binding)
         }
     }
@@ -51,6 +52,10 @@ class AdapterHomeMain(private var homeDataList: List<HomeData>) :
         this.viewType = viewType
         notifyDataSetChanged()
     }
+//    fun setData(newList1: List<HomeData>) {
+//        homeDataList = newList1
+//        notifyDataSetChanged()
+//    }
 
     inner class LinearViewHolder(private val binding: MainRecyclerViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -63,13 +68,13 @@ class AdapterHomeMain(private var homeDataList: List<HomeData>) :
         }
     }
 
-    inner class GridViewHolder(private val binding: ItemMainHomeGridBinding) :
+    inner class GridViewHolder(private val binding: MainRecyclerViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(homeData: HomeData) {
-            binding.testimage2.setImageResource(homeData.homeimageview)
-            binding.header2.text = homeData.textViewHeader
-            binding.headernick.text = homeData.textViewnickname
+            binding.testimage.setImageResource(homeData.homeimageview)
+            binding.Header.text = homeData.textViewHeader
+            binding.nicknameofheader.text = homeData.textViewnickname
 
         }
     }

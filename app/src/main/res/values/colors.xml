@@ -12,4 +12,8 @@
 
     <color name="nick">#0057FF</color>
     <color name="AlldocumentBackground">#0D251D36</color>
+
+    <color name="navigationbar">#F6F6F6</color>
+
+    <color name="viewshadow">#F1F1F1</color>
 </resources>

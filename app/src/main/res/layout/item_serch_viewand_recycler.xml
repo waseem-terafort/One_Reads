@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="12dp"
-            android:src="@drawable/favorite_outline_24"
+            android:src="@drawable/favorite_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/homearrow"
             app:layout_constraintTop_toTopOf="parent" />
