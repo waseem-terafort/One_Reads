@@ -13,6 +13,24 @@
         <action
             android:id="@+id/action_homeFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_documentsFragment"
+            app:destination="@id/documentsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_PDFFragment"
+            app:destination="@id/PDFFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_exelFragment"
+            app:destination="@id/exelFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_docFragment"
+            app:destination="@id/docFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_PPTFragment"
+            app:destination="@id/PPTFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_TXTFragment"
+            app:destination="@id/TXTFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -28,4 +46,34 @@
         android:name="com.terafort.onereads.fragments.settings.PrivacyPolicy"
         android:label="fragment_privacy_policy"
         tools:layout="@layout/fragment_privacy_policy" />
+    <fragment
+        android:id="@+id/documentsFragment"
+        android:name="com.terafort.onereads.fragments.DocumentsFragment"
+        android:label="DocumentsFragment"
+        tools:layout="@layout/fragment_documents"/>
+    <fragment
+        android:id="@+id/PDFFragment"
+        android:name="com.terafort.onereads.fragments.documetsfiles.PDFFragment"
+        android:label="PDFFragment"
+        tools:layout="@layout/fragment_p_d_f"/>
+    <fragment
+        android:id="@+id/exelFragment"
+        android:name="com.terafort.onereads.fragments.documetsfiles.ExelFragment"
+        android:label="ExelFragment"
+        tools:layout="@layout/fragment_exel"/>
+    <fragment
+        android:id="@+id/docFragment"
+        android:name="com.terafort.onereads.fragments.documetsfiles.DocFragment"
+        android:label="DocFragment"
+        tools:layout="@layout/fragment_doc"/>
+    <fragment
+        android:id="@+id/PPTFragment"
+        android:name="com.terafort.onereads.fragments.documetsfiles.PPTFragment"
+        android:label="PPTFragment"
+        tools:layout="@layout/fragment_p_p_t"/>
+    <fragment
+        android:id="@+id/TXTFragment"
+        android:name="com.terafort.onereads.fragments.documetsfiles.TXTFragment"
+        android:label="TXTFragment"
+        tools:layout="@layout/fragment_t_x_t"/>
 </navigation>

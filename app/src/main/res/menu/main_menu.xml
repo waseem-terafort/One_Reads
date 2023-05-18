@@ -3,8 +3,8 @@
 <item
     android:id="@+id/homeFragment"
     android:title="Home"
+    android:icon="@drawable/home_icon"
 
-    android:icon="@drawable/bacground_navigation_iconn"
     />
     <item
         android:id="@+id/settingsFragment"

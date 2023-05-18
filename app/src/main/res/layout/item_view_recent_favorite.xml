@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="wrap_content">
@@ -10,7 +11,7 @@
         android:layout_height="100dp"
         android:layout_marginHorizontal="10dp"
         android:layout_marginVertical="10dp"
-        android:background="@drawable/all_document_background"
+        android:background="@drawable/background_card_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,7 +21,6 @@
             android:id="@+id/testimage5"
             android:layout_width="0dp"
             android:layout_height="0dp"
-
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHeight_percent="0.8"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,8 +42,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
+            android:text="nick"
             android:textSize="10dp"
             app:layout_constraintStart_toEndOf="@+id/testimage5"
+            app:layout_constraintTop_toBottomOf="@+id/Header5"
+            app:layout_constraintEnd_toStartOf="@+id/datefavorite"/>
+
+        <TextView
+            android:id="@+id/datefavorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:text="date"
+            android:textColor="@color/black"
+            android:textSize="10dp"
+            app:layout_constraintStart_toEndOf="@+id/nicknameofheader5"
+            app:layout_constraintTop_toBottomOf="@+id/Header5" />
+
+        <TextView
+            android:id="@+id/timefavorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="time"
+            android:layout_marginStart="6dp"
+            android:textColor="@color/black"
+            android:textSize="10dp"
+            app:layout_constraintStart_toEndOf="@+id/datefavorite"
             app:layout_constraintTop_toBottomOf="@+id/Header5" />
 
         <ImageView

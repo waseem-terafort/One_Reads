@@ -1,21 +1,25 @@
 package com.terafort.onereads.data
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.lifecycle.LiveData
+import androidx.room.*
+
 @Dao
 interface OneReadsDao {
-    @Insert
-    fun insertRestaurant(favoriteData: FavoriteData)
+    @Query("select * from Favorite")
+    fun getAllMovies(): LiveData<List<FavoriteData>>
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertAllMovie(result: List<FavoriteData>)
+    // Bookmark
+    @Query("select * from Favorite where favorite = 1")
+    fun getFavourite(): LiveData<List<FavoriteData>>
 
-    @Delete
-    fun deleteRestaurant(favoriteData: FavoriteData)
+    @Query("select favorite from Favorite where id = :id")
+    suspend fun updateBookmark(id: Int): Boolean
 
-    @Query("SELECT * FROM Favorite")
-    fun getAllRestaurants():List<FavoriteData>
+    @Query("update Favorite set favorite = 1 where id = :id  ")
+    suspend fun favorite(id: Int)
 
-    @Query("SELECT * FROM Favorite WHERE restaurant_id = :restaurantId")
-    fun  getRestaurantById(restaurantId:String):FavoriteData
+    @Query("update Favorite set favorite = 0 where id = :id")
+    suspend fun isNotSelected(id: Int)
 
 }

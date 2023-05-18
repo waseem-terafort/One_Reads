@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Add the shape drawable as the background -->
-    <item android:drawable="@drawable/backgroung_navigation"
-        android:width="70dp"
-        android:height="30dp"/>
-    <!-- Add the icon as a layer on top of the shape drawable -->
     <item
         android:drawable="@drawable/home_icon"
         android:gravity="center"

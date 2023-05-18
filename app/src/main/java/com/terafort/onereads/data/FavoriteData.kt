@@ -1,14 +1,19 @@
 package com.terafort.onereads.data
 
-import androidx.room.ColumnInfo
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-
+import kotlinx.android.parcel.Parcelize
+@Parcelize
 @Entity(tableName = "Favorite")
-data class FavoriteData(@ColumnInfo(name="restaurant_id") @PrimaryKey var restaurantId:String,
-                        @ColumnInfo(name="restaurant_name") var restaurantName:String,
-                        @ColumnInfo(name="restaurant_rating") var restaurentRating: String,
-                        @ColumnInfo(name="restaurant_cost") var costPerPerson: Int,
-                        @ColumnInfo(name="restaurant_image")  var restaurantImage:String
-                        )
+data class FavoriteData(@PrimaryKey
+                        val id: Int,
+                        var documentimage:String,
+                         var documentname:String,
+                         var documentfiles: String,
+                        var documentsdate:String,
+                        var documentstime:String,
+                         var favorite: Boolean=false,
+                          var menuoption:String
+                        ): Parcelable
 

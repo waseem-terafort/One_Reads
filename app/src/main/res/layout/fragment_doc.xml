@@ -14,7 +14,7 @@
         tools:context=".fragments.DocumentsFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout6"
+            android:id="@+id/doc_constraintlayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@color/white"
@@ -22,10 +22,10 @@
             app:layout_constraintHeight_percent="0.08"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/recycleralldocuments">
+            app:layout_constraintBottom_toTopOf="@+id/docrecycleralldocuments">
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/docimageView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="12dp"
@@ -35,18 +35,18 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/doctextView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:text="All Files"
+                android:text="Document Files"
                 android:textSize="22dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView2"
+                app:layout_constraintStart_toEndOf="@+id/docimageView2"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/docimageView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="11dp"
@@ -56,25 +56,26 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
+                android:id="@+id/docsync"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="11dp"
                 android:src="@drawable/sync_icon"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/imageView3"
+                app:layout_constraintEnd_toStartOf="@+id/docimageView3"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycleralldocuments"
+            android:id="@+id/docrecycleralldocuments"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@color/viewshadow"
             app:layout_constraintHeight_percent="0.9"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout6">
+            app:layout_constraintTop_toBottomOf="@+id/doc_constraintlayout">
 
         </androidx.recyclerview.widget.RecyclerView>
         <include
@@ -86,7 +87,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/constraintLayout6" />
+            app:layout_constraintTop_toBottomOf="@id/doc_constraintlayout" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

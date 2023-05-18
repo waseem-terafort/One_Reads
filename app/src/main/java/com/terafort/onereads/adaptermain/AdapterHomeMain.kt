@@ -9,9 +9,11 @@ import com.terafort.onereads.data.HomeData
 
 import com.terafort.onereads.databinding.MainRecyclerViewBinding
 
-class AdapterHomeMain(private var homeDataList: List<HomeData>) :
+class AdapterHomeMain(private var homeDataList: List<HomeData>, private val listener: OnItemClickListener) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
+    interface OnItemClickListener {
+        fun onItemClick2(position: Int)
+    }
     private var viewType = VIEW_TYPE_LINEAR
 
     companion object {
@@ -52,10 +54,6 @@ class AdapterHomeMain(private var homeDataList: List<HomeData>) :
         this.viewType = viewType
         notifyDataSetChanged()
     }
-//    fun setData(newList1: List<HomeData>) {
-//        homeDataList = newList1
-//        notifyDataSetChanged()
-//    }
 
     inner class LinearViewHolder(private val binding: MainRecyclerViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -65,6 +63,11 @@ class AdapterHomeMain(private var homeDataList: List<HomeData>) :
             binding.Header.text = homeData.textViewHeader
             binding.nicknameofheader.text = homeData.textViewnickname
 
+        }
+        init {
+            itemView.setOnClickListener {
+                listener.onItemClick2(adapterPosition)
+            }
         }
     }
 
@@ -76,6 +79,11 @@ class AdapterHomeMain(private var homeDataList: List<HomeData>) :
             binding.Header.text = homeData.textViewHeader
             binding.nicknameofheader.text = homeData.textViewnickname
 
+        }
+        init {
+            itemView.setOnClickListener {
+                listener.onItemClick2(adapterPosition)
+            }
         }
     }
 }

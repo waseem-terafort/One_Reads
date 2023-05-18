@@ -3,94 +3,92 @@ package com.terafort.onereads.fragments
 
 import android.os.Bundle
 import android.util.Log
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
 import com.terafort.onereads.R
-import com.terafort.onereads.adaptermain.AdapterDocuments
 import com.terafort.onereads.adaptermain.AdapterHomeMain
-import com.terafort.onereads.adaptermain.RecentAndFavorite
-import com.terafort.onereads.adaptermain.adapterfavorite.TestAdapter
+import com.terafort.onereads.adaptermain.adapterfavorite.AdapterFavorite
 import com.terafort.onereads.data.FavoriteData
 import com.terafort.onereads.data.HomeData
-import com.terafort.onereads.data.OneReadClassData
-import com.terafort.onereads.data.searchviewdata.RecntDataList
 import com.terafort.onereads.databinding.FragmentHomeBinding
-import com.terafort.onereads.model.HomeViewmodel
+import com.terafort.onereads.viewmodel.FactoryOfFavorite
+import com.terafort.onereads.viewmodel.FavoriteViewModel
+import com.terafort.onereads.viewmodel.HomeViewmodel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-
-class HomeFragment : Fragment(),RecentAndFavorite.OnItemClickListener {
+//,RecentAndFavorite.OnItemClickListener
+class HomeFragment : Fragment() , AdapterHomeMain.OnItemClickListener {
     private val homeDataList: MutableList<HomeData> = mutableListOf()
     var favoriteList=listOf<FavoriteData>()
-    var RecentList=listOf<RecntDataList>()
     private lateinit var binding: FragmentHomeBinding
     private lateinit var viewModel: HomeViewmodel
+    private lateinit var viewmodelFavorite:FavoriteViewModel
+    private lateinit var factoryOfFavorite: FactoryOfFavorite
     private lateinit var adapter: AdapterHomeMain
-    private lateinit var AllDocuments: AdapterDocuments
-    private lateinit var recentAdapter: RecentAndFavorite
-//    private lateinit var favoriteAdapter: AdapterFavorite
-    private lateinit var favoriteAdapter: TestAdapter
     private var isGridLayout = true
     private var isIconChanged = false
+    private val viewModels: FavoriteViewModel by lazy {
+        ViewModelProvider(this, FactoryOfFavorite(requireContext().applicationContext))[FavoriteViewModel::class.java]
+    }
+    private val favorite by lazy {
+        AdapterFavorite(requireContext()) {
+            viewModels.updateBookmark(it.id)
+        }
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
         ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val factory = ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
-        try {
-            viewModel = ViewModelProvider(this@HomeFragment, factory)[HomeViewmodel::class.java]
-        } catch (ex: Exception) {
-            Log.e("HomeFragment", "Error initializing HomeViewModel: ${ex.message}")
-        }
+        factoryOfFavorite = FactoryOfFavorite(requireContext())
+        viewModel = ViewModelProvider(this)[HomeViewmodel::class.java]
+        viewmodelFavorite = ViewModelProvider(this, factoryOfFavorite)[FavoriteViewModel::class.java]
+
         return binding.root
         }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        binding.textViewdocument.setTextColor(ContextCompat.getColor(requireContext(), R.color.nick))
-//        // Reset the text color of the other TextViews
-//        binding.textViewRecent.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-//        binding.textViewFavorite.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+        viewModel = ViewModelProvider(this)[viewModel::class.java]
+        setupViewModel()
+        viewmodelFavorite.filteredMovieList.observe(viewLifecycleOwner, Observer {
+            favorite.submitList(it)
+        })
         lifecycleScope.launch(Dispatchers.IO) {
-            if(requireContext()!=null) {
-                val db = Room.databaseBuilder(
-                    requireContext(),
-                    OneReadClassData::class.java,
-                    "restaurant-db"
-                ).build()
-                favoriteList = db.restaurantDao().getAllRestaurants()
-                Log.e("checklist",""+favoriteList)
-            }
+            delay(500)
             withContext(Dispatchers.Main) {
-                setupViewModel()
                 setupRecyclerView()
+//                setRecyclerView()
                 handleClicks()
             }
         }
     }
-
         private fun handleClicks(){
         binding.textViewdocument.setOnClickListener {
+
             onDocumentClick(it)
         }
         binding.textViewRecent.setOnClickListener {
-            onClickrecent(it,RecentList)
+            viewmodelFavorite.getAllBookmark(false)
+            setRecyclerView()
         }
         binding.textViewFavorite.setOnClickListener {
-            onFavoriteClick(it,favoriteList)
+            setRecyclerView()
+            viewmodelFavorite.getAllBookmark(true)
         }
         binding.lineartoGrid.setOnClickListener {
             isGridLayout = !isGridLayout
@@ -114,72 +112,53 @@ class HomeFragment : Fragment(),RecentAndFavorite.OnItemClickListener {
         } else {
             LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
         }
-        adapter = AdapterHomeMain(homeDataList)
+        adapter = AdapterHomeMain(homeDataList, this)
         binding.recyclerviewhome.layoutManager =layoutManager
         binding.recyclerviewhome.setHasFixedSize(false)
         binding.recyclerviewhome.adapter = adapter
         adapter.notifyDataSetChanged()
-//        AllDocuments = AdapterDocuments(homeDataList)
-        recentAdapter = RecentAndFavorite(homeDataList,this)
-        Log.e("checklist2",""+recentAdapter)
+
+    }
+    private fun setRecyclerView() {
+        binding.syncimage.visibility=View.VISIBLE
+        binding.lineartoGrid.visibility=View.GONE
+        binding.recyclerviewhome.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerviewhome.adapter = favorite
     }
     private fun setupViewModel() {
             viewModel.myDataList.observe(viewLifecycleOwner) { data ->
                 homeDataList.clear()
                 homeDataList.addAll(data)
         }
-        Log.e("checklist",""+homeDataList)
     }
     fun onDocumentClick(view: View) {
+        binding.lineartoGrid.visibility=View.VISIBLE
+        binding.syncimage.visibility=View.GONE
         binding.recyclerviewhome.layoutManager = GridLayoutManager(context, 2)
         binding.recyclerviewhome.adapter = adapter
         binding.lineartoGrid.setImageResource(R.drawable.linear_icon)
-//        binding.textViewdocument.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-//
-//        binding.textViewdocument.setOnClickListener {
-//            // Set text color for current click event
-//            binding.textViewdocument.setTextColor(ContextCompat.getColor(requireContext(), R.color.nick))
-//            binding.textViewRecent.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-//            binding.textViewFavorite.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-//        }
-    }
-    fun onClickrecent(view: View,list: List<RecntDataList>) {
-        binding.recyclerviewhome.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
-//        val syncImage = view?.findViewById<ImageView>(R.id.syncimage)
-//        syncImage?.visibility = View.VISIBLE
-//        val grid = view?.findViewById<ImageView>(R.id.lineartoGrid)
-//        grid?.visibility=View.GONE
-        RecentList =list
-        binding.recyclerviewhome.adapter = recentAdapter
-//        binding.textViewRecent.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-//
-//        binding.textViewRecent.setOnClickListener {
-//            // Set text color for current click event
-//            binding.textViewRecent.setTextColor(ContextCompat.getColor(requireContext(), R.color.nick))
-//            binding.textViewdocument.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-//            binding.textViewFavorite.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-//        }
-    }
-    fun onFavoriteClick(view: View, list: List<FavoriteData>) {
-        binding.recyclerviewhome.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
-//        val syncImage = view?.findViewById<ImageView>(R.id.syncimage)
-//        syncImage?.visibility = View.VISIBLE
-//        val grid = view?.findViewById<ImageView>(R.id.lineartoGrid)
-//        grid?.visibility=View.GONE
-        favoriteList = list
-        binding.recyclerviewhome.adapter = recentAdapter
-//        binding.textViewFavorite.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-//
-//        binding.textViewFavorite.setOnClickListener {
-//            // Set text color for current click event
-//            binding.textViewFavorite.setTextColor(ContextCompat.getColor(requireContext(), R.color.nick))
-//            binding.textViewdocument.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-//            binding.textViewRecent.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-//        }
     }
 
-    override fun onItemClick(position: Int) {
-        Toast.makeText(requireContext(), ""+position, Toast.LENGTH_SHORT).show()
+    override fun onItemClick2(position: Int) {
+        when (position) {
+            0 -> {
+                NavHostFragment.findNavController(this).navigate(R.id.action_homeFragment_to_documentsFragment)
+            }
+            1 ->{
+                NavHostFragment.findNavController(this).navigate(R.id.action_homeFragment_to_PDFFragment)
+            }
+            2->{
+                NavHostFragment.findNavController(this).navigate(R.id.action_homeFragment_to_exelFragment)
+            }
+            3->{
+                NavHostFragment.findNavController(this).navigate(R.id.action_homeFragment_to_docFragment)
+            }
+            4->{
+                NavHostFragment.findNavController(this).navigate(R.id.action_homeFragment_to_PPTFragment)
+            }
+            5->{
+                NavHostFragment.findNavController(this).navigate(R.id.action_homeFragment_to_TXTFragment)
+            }
+        }
     }
-
 }
